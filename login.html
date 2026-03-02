@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Лыся</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-logo">
+            <i class="fas fa-bolt logo-icon"></i>
+            <h1>Лыся</h1>
+            <p class="auth-subtitle">СНГ социальная сеть</p>
+        </div>
+        
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="showTab('login')">Вход</button>
+            <button class="auth-tab" onclick="showTab('register')">Регистрация</button>
+        </div>
+
+        <!-- Форма входа -->
+        <div id="login-form" class="auth-form active">
+            <h2>Войти по номеру телефона</h2>
+            
+            <div class="phone-input-container">
+                <select id="login-country-code" class="country-code-select">
+                    <option value="7">🇷🇺 +7 (Россия)</option>
+                    <option value="7">🇰🇿 +7 (Казахстан)</option>
+                    <option value="374">🇦🇲 +374 (Армения)</option>
+                    <option value="375">🇧🇾 +375 (Беларусь)</option>
+                    <option value="996">🇰🇬 +996 (Кыргызстан)</option>
+                    <option value="373">🇲🇩 +373 (Молдова)</option>
+                    <option value="992">🇹🇯 +992 (Таджикистан)</option>
+                    <option value="993">🇹🇲 +993 (Туркменистан)</option>
+                    <option value="998">🇺🇿 +998 (Узбекистан)</option>
+                    <option value="995">🇬🇪 +995 (Грузия)</option>
+                    <option value="994">🇦🇿 +994 (Азербайджан)</option>
+                </select>
+                <input type="tel" id="login-phone" placeholder="Номер телефона" class="auth-input phone-input">
+            </div>
+            
+            <input type="password" id="login-password" placeholder="Пароль" class="auth-input">
+            
+            <button onclick="loginWithPhone()" class="auth-button phone-btn">
+                <i class="fas fa-phone"></i> Войти
+            </button>
+        </div>
+
+        <!-- Форма регистрации -->
+        <div id="register-form" class="auth-form">
+            <h2>Создать аккаунт</h2>
+            
+            <input type="text" id="reg-name" placeholder="Ваше имя" class="auth-input">
+            <input type="text" id="reg-username" placeholder="Имя пользователя" class="auth-input">
+            
+            <div class="phone-input-container">
+                <select id="reg-country-code" class="country-code-select">
+                    <option value="7">🇷🇺 +7 (Россия)</option>
+                    <option value="7">🇰🇿 +7 (Казахстан)</option>
+                    <option value="374">🇦🇲 +374 (Армения)</option>
+                    <option value="375">🇧🇾 +375 (Беларусь)</option>
+                    <option value="996">🇰🇬 +996 (Кыргызстан)</option>
+                    <option value="373">🇲🇩 +373 (Молдова)</option>
+                    <option value="992">🇹🇯 +992 (Таджикистан)</option>
+                    <option value="993">🇹🇲 +993 (Туркменистан)</option>
+                    <option value="998">🇺🇿 +998 (Узбекистан)</option>
+                    <option value="995">🇬🇪 +995 (Грузия)</option>
+                    <option value="994">🇦🇿 +994 (Азербайджан)</option>
+                </select>
+                <input type="tel" id="reg-phone" placeholder="Номер телефона" class="auth-input phone-input">
+            </div>
+            
+            <input type="password" id="reg-password" placeholder="Пароль (минимум 6 символов)" class="auth-input">
+            
+            <div class="region-info">
+                <i class="fas fa-globe"></i> Доступно только для стран СНГ
+            </div>
+            
+            <button onclick="registerWithPhone()" class="auth-button phone-btn">
+                <i class="fas fa-user-plus"></i> Зарегистрироваться
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const ALLOWED_COUNTRIES = ['7', '374', '375', '996', '373', '992', '993', '998', '995', '994'];
+        
+        function showTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:first-child').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:last-child').classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+
+        function validatePhone(countryCode, phone) {
+            if (!ALLOWED_COUNTRIES.includes(countryCode)) {
+                return { valid: false, error: 'Эта страна не поддерживается' };
+            }
+            
+            const cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.length < 5) {
+                return { valid: false, error: 'Номер телефона слишком короткий' };
+            }
+            
+            return { valid: true, fullPhone: countryCode + cleanPhone };
+        }
+
+        async function loginWithPhone() {
+            const countryCode = document.getElementById('login-country-code').value;
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!password) {
+                alert('Введите пароль');
+                return;
+            }
+            
+            const validation = validatePhone(countryCode, phone);
+            if (!validation.valid) {
+                alert(validation.error);
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/login-phone', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        phone: validation.fullPhone,
+                        password: password 
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error || 'Ошибка входа');
+                }
+            } catch (error) {
+                alert('Ошибка сервера');
+            }
+        }
+
+        async function registerWithPhone() {
+            const name = document.getElementById('reg-name').value;
+            const username = document.getElementById('reg-username').value;
+            const countryCode = document.getElementById('reg-country-code').value;
+            const phone = document.getElementById('reg-phone').value;
+            const password = document.getElementById('reg-password').value;
+            
+            if (!name || !username || !phone || !password) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Пароль должен быть минимум 6 символов');
+                return;
+            }
+            
+            const validation = validatePhone(countryCode, phone);
+            if (!validation.valid) {
+                alert(validation.error);
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/register-phone', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name, 
+                        username, 
+                        phone: validation.fullPhone,
+                        countryCode: countryCode,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error || 'Ошибка регистрации');
+                }
+            } catch (error) {
+                alert('Ошибка сервера');
+            }
+        }
+    </script>
+</body>
+</html>

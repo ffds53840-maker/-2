@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Лыся</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <i class="fas fa-arrow-left" onclick="window.location.href='index.html'"></i>
+        <span>Профиль</span>
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <img id="profileAvatar" src="https://via.placeholder.com/100" alt="Avatar">
+            <div class="avatar-overlay" onclick="openEditProfile()">
+                <i class="fas fa-camera"></i>
+            </div>
+        </div>
+        <div class="profile-stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="postsCount">0</div>
+                <div class="stat-label">постов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="followersCount">0</div>
+                <div class="stat-label">подписчики</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="followingCount">0</div>
+                <div class="stat-label">подписки</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalLikes">0</div>
+                <div class="stat-label">молний</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-info">
+        <h3 id="profileName">Имя пользователя</h3>
+        <h4 id="profileUsername">@username</h4>
+        <div id="profileCountry" class="user-country"></div>
+        <p id="profileBio"></p>
+        <div id="profileChannels" class="profile-channels"></div>
+        <button class="profile-action-btn" style="display: none;">Подписаться</button>
+        <button class="edit-profile-btn" onclick="openEditProfile()">Редактировать профиль</button>
+    </div>
+
+    <div class="profile-tabs">
+        <div class="tab active" onclick="showProfileTab('posts')">
+            <i class="fas fa-th"></i>
+        </div>
+        <div class="tab" onclick="showProfileTab('channels')">
+            <i class="fas fa-bolt"></i>
+        </div>
+    </div>
+
+    <div id="profilePosts" class="profile-posts"></div>
+
+    <!-- Модальное окно редактирования профиля -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Редактировать профиль</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <div class="avatar-edit">
+                <img id="editAvatar" src="https://via.placeholder.com/120" alt="Avatar">
+                <input type="file" id="avatarInput" accept="image/*">
+                <label for="avatarInput" class="change-avatar-btn">
+                    <i class="fas fa-camera"></i> Изменить фото
+                </label>
+            </div>
+            <input type="text" id="editUsername" placeholder="Имя пользователя" class="modal-input">
+            <input type="text" id="editName" placeholder="Имя" class="modal-input">
+            <textarea id="editBio" placeholder="О себе" rows="3" class="modal-textarea"></textarea>
+            <button onclick="updateProfile()" class="save-btn">Сохранить</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать пост ⚡️</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="postTitle" placeholder="Заголовок" class="modal-input">
+            <textarea id="postContent" placeholder="Описание... #хештеги" rows="4" class="modal-textarea"></textarea>
+            <div class="media-preview" id="mediaPreview"></div>
+            <input type="file" id="postMedia" accept="image/*,video/*" onchange="previewMedia(this)" class="modal-file">
+            <button onclick="createPost()" class="publish-btn">
+                <i class="fas fa-bolt"></i> Опубликовать
+            </button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <i class="fas fa-home" onclick="window.location.href='index.html'"></i>
+        <i class="fas fa-bolt" onclick="window.location.href='channels.html'"></i>
+        <i class="fas fa-plus-circle" onclick="openCreatePost()"></i>
+        <i class="fas fa-comment" onclick="window.location.href='chat.html'"></i>
+        <i class="fas fa-user active" onclick="window.location.href='profile.html'"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

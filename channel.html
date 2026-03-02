@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Канал - Лыся</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <i class="fas fa-arrow-left" onclick="window.history.back()"></i>
+        <span>Канал</span>
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+
+    <div id="channelContent" class="channel-content">
+        <div class="loading">Загрузка канала...</div>
+    </div>
+
+    <div class="bottom-nav">
+        <i class="fas fa-home" onclick="window.location.href='index.html'"></i>
+        <i class="fas fa-bolt active" onclick="window.location.href='channels.html'"></i>
+        <i class="fas fa-plus-circle" onclick="openCreatePost()"></i>
+        <i class="fas fa-comment" onclick="window.location.href='chat.html'"></i>
+        <i class="fas fa-user" onclick="window.location.href='profile.html'"></i>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать пост ⚡️</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="postTitle" placeholder="Заголовок" class="modal-input">
+            <textarea id="postContent" placeholder="Описание... #хештеги" rows="4" class="modal-textarea"></textarea>
+            <div class="media-preview" id="mediaPreview"></div>
+            <input type="file" id="postMedia" accept="image/*,video/*" onchange="previewMedia(this)" class="modal-file">
+            <button onclick="createPost()" class="publish-btn">
+                <i class="fas fa-bolt"></i> Опубликовать
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

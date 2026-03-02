@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каналы - Лыся</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-bolt logo-icon"></i>
+            <span>Лыся</span>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-search" onclick="toggleSearch()"></i>
+            <i class="fas fa-plus-circle" onclick="openCreateChannel()"></i>
+            <i class="fas fa-sign-out-alt" onclick="logout()"></i>
+        </div>
+    </div>
+
+    <!-- Поиск -->
+    <div id="searchContainer" class="search-container" style="display: none;">
+        <input type="text" id="searchInput" placeholder="Поиск пользователей..." class="search-input" oninput="searchUsers()">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="channels-header">
+        <h2>Каналы ⚡️</h2>
+        <button class="create-channel-btn" onclick="openCreateChannel()">
+            <i class="fas fa-plus"></i> Создать
+        </button>
+    </div>
+
+    <div id="channelsContainer" class="channels-container">
+        <div class="loading">Загрузка каналов...</div>
+    </div>
+
+    <div class="bottom-nav">
+        <i class="fas fa-home" onclick="window.location.href='index.html'"></i>
+        <i class="fas fa-bolt active" onclick="window.location.href='channels.html'"></i>
+        <i class="fas fa-plus-circle" onclick="openCreatePost()"></i>
+        <i class="fas fa-comment" onclick="window.location.href='chat.html'"></i>
+        <i class="fas fa-user" onclick="window.location.href='profile.html'"></i>
+    </div>
+
+    <!-- Модальное окно создания канала -->
+    <div id="createChannelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать канал ⚡️</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="channelName" placeholder="Название канала" class="modal-input">
+            <textarea id="channelDescription" placeholder="Описание канала" rows="3" class="modal-textarea"></textarea>
+            
+            <div class="channel-requirements">
+                <h4>Условия входа:</h4>
+                <label>
+                    <input type="number" id="reqMinLikes" value="0" min="0">
+                    Минимум лайков у создателя
+                </label>
+                <label>
+                    <input type="checkbox" id="reqMustFollow">
+                    Требуется подписка на создателя
+                </label>
+                <label>
+                    <input type="checkbox" id="reqMustShare">
+                    Требуется репост
+                </label>
+            </div>
+
+            <div class="media-preview" id="channelAvatarPreview"></div>
+            <input type="file" id="channelAvatar" accept="image/*" onchange="previewChannelAvatar(this)" class="modal-file">
+            
+            <button onclick="createChannel()" class="publish-btn">
+                <i class="fas fa-bolt"></i> Создать канал
+            </button>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать пост ⚡️</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="postTitle" placeholder="Заголовок" class="modal-input">
+            <textarea id="postContent" placeholder="Описание... #хештеги" rows="4" class="modal-textarea"></textarea>
+            <div class="media-preview" id="mediaPreview"></div>
+            <input type="file" id="postMedia" accept="image/*,video/*" onchange="previewMedia(this)" class="modal-file">
+            <button onclick="createPost()" class="publish-btn">
+                <i class="fas fa-bolt"></i> Опубликовать
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

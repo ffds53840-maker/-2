@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чаты - Лыся</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-bolt logo-icon"></i>
+            <span>Лыся</span>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-search" onclick="toggleSearch()"></i>
+            <i class="fas fa-users" onclick="openCreateGroup()"></i>
+            <i class="fas fa-sign-out-alt" onclick="logout()"></i>
+        </div>
+    </div>
+
+    <!-- Поиск -->
+    <div id="searchContainer" class="search-container" style="display: none;">
+        <input type="text" id="searchInput" placeholder="Поиск пользователей..." class="search-input" oninput="searchUsers()">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div id="chatView">
+        <!-- Список чатов -->
+        <div id="chatsList" class="chats-list">
+            <div class="chats-header">
+                <h2>Чаты 💬</h2>
+                <button class="new-chat-btn" onclick="openNewChat()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div id="chatsContainer" class="chats-container">
+                <div class="loading">Загрузка чатов...</div>
+            </div>
+        </div>
+
+        <!-- Окно чата -->
+        <div id="chatWindow" class="chat-window" style="display: none;">
+            <div class="chat-header">
+                <i class="fas fa-arrow-left" onclick="backToChats()"></i>
+                <div id="chatHeaderInfo" class="chat-header-info">
+                    <h3>Чат</h3>
+                    <p>онлайн</p>
+                </div>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+            
+            <div id="messagesContainer" class="messages-container"></div>
+            
+            <div class="chat-input-container">
+                <input type="text" id="messageInput" placeholder="Напишите сообщение..." class="chat-input">
+                <button class="chat-send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <i class="fas fa-home" onclick="window.location.href='index.html'"></i>
+        <i class="fas fa-bolt" onclick="window.location.href='channels.html'"></i>
+        <i class="fas fa-plus-circle" onclick="openCreatePost()"></i>
+        <i class="fas fa-comment active" onclick="window.location.href='chat.html'"></i>
+        <i class="fas fa-user" onclick="window.location.href='profile.html'"></i>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать пост ⚡️</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="postTitle" placeholder="Заголовок" class="modal-input">
+            <textarea id="postContent" placeholder="Описание... #хештеги" rows="4" class="modal-textarea"></textarea>
+            <div class="media-preview" id="mediaPreview"></div>
+            <input type="file" id="postMedia" accept="image/*,video/*" onchange="previewMedia(this)" class="modal-file">
+            <button onclick="createPost()" class="publish-btn">
+                <i class="fas fa-bolt"></i> Опубликовать
+            </button>
+        </div>
+    </div>
+
+    <!-- Модальное окно нового чата -->
+    <div id="newChatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Новый чат</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="newChatSearch" placeholder="Поиск пользователей..." class="modal-input" oninput="searchUsersForChat()">
+            <div id="newChatResults" class="search-results" style="position:static; display:block;"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания группы -->
+    <div id="createGroupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать группу</h3>
+                <i class="fas fa-times close-modal"></i>
+            </div>
+            <input type="text" id="groupName" placeholder="Название группы" class="modal-input">
+            <input type="text" id="groupSearch" placeholder="Добавить участников..." class="modal-input" oninput="searchUsersForGroup()">
+            <div id="selectedUsers" class="selected-users"></div>
+            <div id="groupSearchResults" class="search-results" style="position:static; display:block;"></div>
+            <button onclick="createGroup()" class="publish-btn">
+                <i class="fas fa-users"></i> Создать группу
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
