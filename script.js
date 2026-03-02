@@ -6,7 +6,7 @@ let selectedUsers = [];
 
 // ============= НАСТРОЙКИ СЕРВЕРА =============
 // ЗАМЕНИТЕ НА ВАШ URL ИЗ xTunnel!
-const SERVER_URL = 'https://random-name.xtunnel.ru'; // Сюда вставьте ваш URL
+const SERVER_URL = 'https://ec9b58ee-a317-480d-b709-1a81e0312d2e.tunnel4.com'; // Сюда вставьте ваш URL
 const WS_URL = SERVER_URL.replace('http', 'ws');
 
 // Проверка авторизации при загрузке
@@ -1956,4 +1956,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
 });
